@@ -260,7 +260,8 @@ h4 { margin: 0; }
   .side-book { display: block; margin-top: auto; }
 
   .main {
-    margin-left: var(--side-w);
+    /* Centered in the space right of the sidebar on wide screens */
+    margin-left: calc(var(--side-w) + max(0px, (100% - var(--side-w) - 1260px) / 2));
     max-width: 1260px;
     padding: 32px 36px 40px;
   }
@@ -358,15 +359,29 @@ h4 { margin: 0; }
 .card-arrow::before { content: "\2197"; font-size: 1rem; }
 .card-link-card:hover .card-arrow { background: var(--blue); color: var(--white); }
 
-/* Intro card (desktop only; phones have the top bar) */
-.card-intro { display: none; }
+/* Intro card: compact on phones (photo, name, Cebu line), large on desktop */
+.card-intro {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 16px;
+  align-items: center;
+}
+.card-intro .intro-photo,
+.card-intro .intro-label,
+.card-intro .intro-rule,
+.card-intro .intro-line { display: none; }
+.intro-thumb {
+  grid-row: 1 / span 2;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .intro-photo {
   width: 100%;
-  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 14px;
   background: var(--bg-light);
-  margin-bottom: 20px;
 }
 .intro-label {
   font-size: 0.75rem;
@@ -376,8 +391,9 @@ h4 { margin: 0; }
   margin: 0 0 4px;
 }
 .intro-name {
-  font-size: 2rem;
-  margin: 0 0 14px;
+  font-size: 1.3rem;
+  margin: 0 40px 4px 0;
+  align-self: end;
 }
 .intro-rule {
   border: 0;
@@ -390,6 +406,11 @@ h4 { margin: 0; }
   line-height: 1.35;
   color: var(--navy);
   margin: 12px 0 0;
+}
+.intro-cebu {
+  margin: 0;
+  color: var(--muted);
+  align-self: start;
 }
 
 /* Headline card */
@@ -586,67 +607,105 @@ h4 { margin: 0; }
 }
 .mini-quote figcaption { font-size: 0.85rem; color: var(--muted); }
 
-.card-about { display: flex; align-items: center; gap: 16px; }
-.about-card-photo {
-  flex: none;
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  object-fit: cover;
+/* Icon rows (Services and How I work cards) */
+.icon-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.card-about .card-label { margin-bottom: 6px; }
-.card-about p { margin: 0; color: var(--muted); }
+.icon-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.icon-list li:first-child { border-top: 0; padding-top: 0; }
+.icon-list li:last-child { padding-bottom: 0; }
+.icon-box {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #E3EEFF;
+  color: var(--blue);
+}
+.icon-box svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon-text { display: flex; flex-direction: column; min-width: 0; }
+.icon-title { color: var(--navy); line-height: 1.35; }
+.icon-sub { font-size: 0.9rem; line-height: 1.4; color: var(--muted); margin-top: 2px; }
 
 /* Desktop bento grid */
 @media (min-width: 1024px) {
   .stats { display: none; }
-  .card-intro { display: flex; flex-direction: column; }
-  .card-intro .intro-photo {
-    flex: 1 0 auto;
-    aspect-ratio: auto;
-    object-position: center 20%;
-  }
-  .card-intro .intro-label:first-of-type { margin-top: 20px; }
 
   .bento {
     gap: 16px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     grid-template-areas:
-      "intro hero"
-      "intro tools"
-      "cases cases"
-      "services how"
-      "about about"
-      "testi testi";
+      "hero  hero  hero  hero  hero"
+      "tools tools tools tools tools"
+      "cases cases cases services services"
+      "intro intro testi testi testi"
+      "how   how   how   how   how";
   }
-  .card-intro        { grid-area: intro; }
-  .card-hero         { grid-area: hero; display: block; }
-  .card-hero .lead   { margin-bottom: 22px; }
+  .card-hero         { grid-area: hero; }
   .card-tools        { grid-area: tools; }
   .card-cases        { grid-area: cases; }
   .card-services     { grid-area: services; }
-  .card-about        { grid-area: about; }
+  .card-intro        { grid-area: intro; }
   .card-testimonials { grid-area: testi; }
   .card-how          { grid-area: how; }
-  .card-hero h1      { font-size: clamp(1.6rem, 2.6vw, 2.5rem); }
-}
-@media (min-width: 1280px) {
-  .bento {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-areas:
-      "intro hero hero"
-      "intro tools tools"
-      "cases cases services"
-      "cases cases about"
-      "testi testi how";
+  .card-hero h1      { font-size: clamp(1.8rem, 2.6vw, 2.5rem); max-width: 22em; }
+
+  /* Large intro card. The photo takes whatever height the row allows,
+     so the intro and Testimonials cards end at the same line. */
+  .card-intro { display: flex; flex-direction: column; align-items: stretch; }
+  .card-intro .intro-thumb { display: none; }
+  .card-intro .intro-photo,
+  .card-intro .intro-label,
+  .card-intro .intro-rule,
+  .card-intro .intro-line { display: block; }
+  .card-intro .intro-photo {
+    flex: 1 1 0;
+    min-height: 160px;
+    height: 0;
+    object-position: center 20%;
+    margin-bottom: 20px;
   }
-  .card-hero {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 28px;
+  .card-intro .intro-name { font-size: 2rem; margin: 0 0 14px; align-self: auto; }
+  .card-intro .intro-cebu { margin-top: 10px; }
+  .card-intro .card-arrow { z-index: 2; pointer-events: none; }
+
+  /* Fill the row height evenly instead of leaving space at the bottom */
+  .card-services, .card-testimonials { display: flex; flex-direction: column; }
+  .card-services .icon-list { flex: 1; display: flex; flex-direction: column; }
+  .card-services .icon-list li { flex: 1; }
+  .card-testimonials .mini-quote { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .card-testimonials .mini-quote blockquote p { font-size: 1.15rem; }
+
+  /* How I work: the 4 steps sit side by side, divided by thin lines */
+  .icon-list-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .icon-list-steps li,
+  .icon-list-steps li:first-child,
+  .icon-list-steps li:last-child {
+    padding: 4px 16px;
+    border-top: 0;
+    border-left: 1px solid var(--line);
   }
-  .card-hero .lead { margin-bottom: 0; }
+  .icon-list-steps li:first-child { border-left: 0; padding-left: 0; }
+
   .card-cases .cover-pair { margin-top: 8px; }
 }
 
