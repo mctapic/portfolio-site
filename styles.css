@@ -677,22 +677,52 @@ h4 { margin: 0; }
   .card-intro .intro-label,
   .card-intro .intro-rule,
   .card-intro .intro-line { display: block; }
+  /* Full head-and-shoulders photo, not cropped. Its white background
+     blends into the white card, so no frame or tint. */
+  .card-intro { justify-content: center; }
   .card-intro .intro-photo {
-    flex: 1 1 0;
-    min-height: 160px;
-    height: 0;
-    object-position: center 20%;
-    margin-bottom: 20px;
+    flex: none;
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    align-self: center;
+    border-radius: 0;
+    background: none;
+    margin-bottom: 16px;
+    /* The photo background is 254 (not 255) white; a 1% lift makes it
+       pure white so it blends into the card with no visible edge. */
+    filter: brightness(1.012);
   }
   .card-intro .intro-name { font-size: 2rem; margin: 0 0 14px; align-self: auto; }
   .card-intro .intro-cebu { margin-top: 10px; }
   .card-intro .card-arrow { z-index: 2; pointer-events: none; }
 
-  /* Fill the row height evenly instead of leaving space at the bottom */
+  /* When a card stretches to match its row, spread its items evenly:
+     the spacers (::before, ::after) grow by 1 and each item by 2, so the
+     space above the first item, between items and below the last is equal,
+     and each divider line sits in the middle of its gap. */
   .card-services, .card-testimonials { display: flex; flex-direction: column; }
-  .card-services .icon-list { flex: 1; display: flex; flex-direction: column; }
-  .card-services .icon-list li { flex: 1; }
-  .card-testimonials .mini-quote { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .card-services .icon-list,
+  .card-testimonials .quote-list { flex: 1 1 auto; display: flex; flex-direction: column; }
+  .card-services .icon-list::before, .card-services .icon-list::after,
+  .card-testimonials .quote-list::before, .card-testimonials .quote-list::after {
+    content: "";
+    flex: 1 1 0;
+  }
+  .card-services .icon-list li,
+  .card-services .icon-list li:first-child,
+  .card-services .icon-list li:last-child { flex: 2 1 auto; padding: 12px 0; }
+  .card-testimonials .mini-quote,
+  .card-testimonials .mini-quote + .mini-quote {
+    flex: 2 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 16px 0;
+  }
   .card-testimonials .mini-quote blockquote p { font-size: 1.15rem; }
 
   /* How I work: the 4 steps sit side by side, divided by thin lines */
