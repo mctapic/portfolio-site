@@ -17,7 +17,6 @@ Open `index.html` and search for:
 
 - `YOUR-CALENDLY-LINK` (4 places): replace `https://calendly.com/YOUR-CALENDLY-LINK` with your Calendly link.
 - `YOUR-EMAIL-ADDRESS` (1 place): replace `mailto:YOUR-EMAIL-ADDRESS` with `mailto:you@example.com`, and replace the visible text `[your email address]` with your address.
-- `WORKSPACE PHOTO GOES HERE` (About): replace the placeholder box with your workspace photo, for example `<img src="images/workspace.webp" alt="My workspace">`.
 
 ## Preview
 

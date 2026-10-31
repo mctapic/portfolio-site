@@ -66,6 +66,16 @@
     window.scrollTo(0, 0);
   });
 
+  /* ---------- Tools card: "See all tools" / "Show less" ---------- */
+  var toolsToggle = document.querySelector('.tools-toggle');
+  var toolsAll = document.getElementById('tools-all');
+  toolsToggle.addEventListener('click', function () {
+    var open = toolsAll.hidden;
+    toolsAll.hidden = !open;
+    toolsToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toolsToggle.textContent = open ? 'Show less' : 'See all tools';
+  });
+
   /* ---------- Clock: time in Cebu, plus the visitor's own time ---------- */
   var clock = document.querySelector('.clock');
   var cebuEl = clock.querySelector('.clock-cebu');
