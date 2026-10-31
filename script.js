@@ -1,34 +1,96 @@
-/* Mobile menu + case study slide viewer. No other JavaScript on the site. */
+/* Section views, Cebu clock and case study slide viewer. No other JavaScript on the site. */
 
 (function () {
-  /* ---------- Menu ---------- */
-  var toggle = document.querySelector('.menu-toggle');
-  var links = document.getElementById('nav-links');
+  /* ---------- Views: each menu link shows one section, like a separate page ---------- */
+  // Address (#...) -> section id
+  var routes = {
+    'home': 'view-home',
+    'services': 'view-services',
+    'case-studies': 'view-case-studies',
+    'how-i-work': 'view-how-i-work',
+    'about': 'view-about',
+    'contact': 'view-contact'
+  };
+  var titles = {
+    'services': 'Services',
+    'case-studies': 'Case studies',
+    'how-i-work': 'How I work',
+    'about': 'About',
+    'contact': 'Contact'
+  };
+  var homeTitle = document.title;
+  var views = document.querySelectorAll('.view');
+  var routeLinks = document.querySelectorAll('[data-route]');
 
-  function closeMenu() {
-    links.classList.remove('is-open');
-    toggle.setAttribute('aria-expanded', 'false');
+  function render(isFirstLoad) {
+    var hash = location.hash.slice(1);
+    try { hash = decodeURIComponent(hash); } catch (e) {}
+    var route = hash || 'home';
+    var target = null; // an element inside a section, e.g. #case-storm
+
+    if (!routes[route]) {
+      var el = document.getElementById(hash);
+      var view = el && el.closest('.view');
+      if (!view) return; // e.g. #main or #top: leave the current section alone
+      route = view.getAttribute('data-view');
+      target = el;
+    }
+
+    views.forEach(function (v) {
+      v.classList.toggle('is-active', v.id === routes[route]);
+    });
+
+    routeLinks.forEach(function (a) {
+      if (a.getAttribute('data-route') === route) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+
+    document.title = titles[route] ? titles[route] + ' | Mary Cris Tapic' : homeTitle;
+
+    if (target) {
+      target.scrollIntoView();
+    } else {
+      window.scrollTo(0, 0);
+      if (!isFirstLoad) {
+        var heading = document.getElementById(routes[route]).querySelector('.view-title');
+        if (heading) heading.focus({ preventScroll: true });
+      }
+    }
   }
 
-  toggle.addEventListener('click', function () {
-    var open = links.classList.toggle('is-open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  window.addEventListener('hashchange', function () { render(false); });
+  render(true);
+
+  document.querySelector('.back-to-top').addEventListener('click', function (e) {
+    e.preventDefault();
+    window.scrollTo(0, 0);
   });
 
-  links.addEventListener('click', function (e) {
-    if (e.target.closest('a')) closeMenu();
-  });
+  /* ---------- Clock: time in Cebu, plus the visitor's own time ---------- */
+  var clock = document.querySelector('.clock');
+  var cebuEl = clock.querySelector('.clock-cebu');
+  var localEl = clock.querySelector('.clock-local');
+  var timeOpts = { hour: 'numeric', minute: '2-digit' };
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && links.classList.contains('is-open')) {
-      closeMenu();
-      toggle.focus();
-    }
-  });
+  try {
+    var cebuFmt = new Intl.DateTimeFormat('en-US', Object.assign({ timeZone: 'Asia/Manila' }, timeOpts));
+    var localFmt = new Intl.DateTimeFormat('en-US', timeOpts);
 
-  document.addEventListener('click', function (e) {
-    if (links.classList.contains('is-open') && !e.target.closest('.site-nav')) closeMenu();
-  });
+    var tick = function () {
+      var now = new Date();
+      var cebu = cebuFmt.format(now);
+      var local = localFmt.format(now);
+      cebuEl.textContent = cebu;
+      // Only show the visitor's time when it differs from Cebu
+      localEl.textContent = local === cebu ? '' : '(' + local + ' your time)';
+    };
+
+    tick();
+    clock.hidden = false;
+    setInterval(tick, 15000);
+  } catch (err) {
+    // Very old browser without time zone support: leave the clock hidden
+  }
 
   /* ---------- Slide viewer ---------- */
   // Each deck: title shown in the viewer, image file prefix and number of slides.
