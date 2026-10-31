@@ -207,11 +207,11 @@ h4 { margin: 0; }
 
 .main {
   min-width: 0;
-  padding: 20px 16px calc(120px + env(safe-area-inset-bottom));
+  padding: 20px 16px calc(150px + env(safe-area-inset-bottom));
 }
 
 @media (min-width: 768px) {
-  .main { padding: 28px 28px calc(130px + env(safe-area-inset-bottom)); }
+  .main { padding: 28px 28px calc(150px + env(safe-area-inset-bottom)); }
 }
 
 @media (min-width: 1024px) {
@@ -450,7 +450,7 @@ h4 { margin: 0; }
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 50s linear infinite;
+  animation: marquee 100s linear infinite;
 }
 .marquee:hover .marquee-track { animation-play-state: paused; }
 .tool-list {
@@ -479,29 +479,6 @@ h4 { margin: 0; }
   .tool-list-copy { display: none; }
 }
 .tools-line { margin: 14px 0 0; color: var(--muted); }
-
-/* Swipeable row (phones) */
-.swipe {
-  display: flex;
-  gap: 12px;
-  margin: 0 -16px;
-  padding: 2px 16px 10px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 0 16px;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-  align-items: flex-start;
-}
-.swipe::-webkit-scrollbar { display: none; }
-.swipe > .card {
-  flex: 0 0 86%;
-  scroll-snap-align: start;
-}
-@media (min-width: 768px) {
-  .swipe { margin: 0 -28px; padding: 2px 28px 10px; scroll-padding: 0 28px; }
-  .swipe > .card { flex-basis: 58%; }
-}
 
 /* Card contents */
 .num-list {
@@ -572,7 +549,6 @@ h4 { margin: 0; }
 /* Desktop bento grid */
 @media (min-width: 1024px) {
   .stats { display: none; }
-  .swipe { display: contents; }
   .card-intro { display: flex; flex-direction: column; }
   .card-intro .intro-photo {
     flex: 1 0 auto;
