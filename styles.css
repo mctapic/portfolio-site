@@ -679,25 +679,21 @@ h4 { margin: 0; }
   .card-intro .intro-label,
   .card-intro .intro-rule,
   .card-intro .intro-line { display: block; }
-  /* Full head-and-shoulders photo, never cropped (object-fit: contain).
-     The photo area grows to fill the card, so there is no gap under the
-     text; the photo sits on the text and the extra white is above the head.
-     Its white background blends into the white card, so no frame or tint. */
+  /* Photo in a rounded frame (same radius as the case study images),
+     inside the card padding. The frame fills all the space above
+     "HI, I'M"; the photo covers it, anchored to the top so the head stays
+     in view with a little space above it. Only the sides get cropped. */
   .card-intro .intro-photo {
     flex: 1 1 0;
     min-height: 200px;
     height: 0;
-    /* Runs to the card's edges, so the photo is as large as possible */
-    width: calc(100% + 44px);
-    max-width: none;
-    margin: -22px -22px 16px;
-    object-fit: contain;
-    object-position: center bottom;
-    border-radius: var(--card-radius) var(--card-radius) 0 0;
-    background: none;
-    /* The photo background is 254 (not 255) white; a 1% lift makes it
-       pure white so it blends into the card with no visible edge. */
-    filter: brightness(1.012);
+    width: 100%;
+    margin: 0 0 16px;
+    object-fit: cover;
+    object-position: center top;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg-light);
   }
   .card-intro .intro-name { font-size: 2rem; margin: 0 0 14px; align-self: auto; }
   .card-intro .intro-cebu { margin-top: 10px; }

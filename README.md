@@ -8,7 +8,7 @@ A one-page site in plain HTML and CSS, with a small amount of JavaScript for swi
 - `index.html`: all page content
 - `styles.css`: colors, fonts and layout
 - `script.js`: section views (one link address per section), Cebu clock and slide viewer
-- `images/headshot-160.webp`, `images/headshot-600.webp`: resized copies of `headshot.png`
+- `images/headshot-160.webp`, `images/headshot-600.webp`, `images/headshot-1200.webp`: resized copies of `headshot.png`
 - `images/case-studies/`: one image per page of each case study PDF
 
 ## Before publishing: replace the placeholders
