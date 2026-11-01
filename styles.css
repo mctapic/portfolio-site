@@ -117,13 +117,29 @@ a:hover { color: var(--navy); }
 
 .btn-large { padding: 15px 28px; font-size: 1.0625rem; }
 
+/* "Book a call" buttons: calendar icon before the text */
+.btn-book {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-icon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 /* ==========================================================
    Shared text styles
    ========================================================== */
 .eyebrow {
   font-size: 0.85rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--blue);
   margin-bottom: 6px;
 }
@@ -230,7 +246,7 @@ h4 { margin: 0; }
     border-right: 1px solid var(--line);
     overflow-y: auto;
   }
-  .profile { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .profile { flex-direction: column; align-items: center; gap: 14px; text-align: center; }
   .profile-photo { width: 104px; height: 104px; box-shadow: 0 0 0 3px var(--white), 0 0 0 5px var(--blue-light); }
   .profile-name { font-size: 1.45rem; }
   .profile-title { font-size: 0.95rem; margin-top: 6px; }
@@ -245,19 +261,31 @@ h4 { margin: 0; }
   .side-nav { display: block; margin: 28px 0 24px; }
   .side-nav ul { list-style: none; margin: 0; padding: 0; }
   .side-nav a {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     padding: 10px 14px;
     border-radius: 8px;
     color: var(--navy);
     text-decoration: none;
   }
   .side-nav a:hover { background: var(--bg-light); color: var(--blue); }
+  .nav-icon {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
   .side-nav a[aria-current="page"] {
     background: var(--bg-light);
     color: var(--blue);
     box-shadow: inset 3px 0 0 var(--blue);
   }
-  .side-book { display: block; margin-top: auto; }
+  .side-book { display: flex; margin-top: auto; }
 
   .main {
     /* Centered in the space right of the sidebar on wide screens */
@@ -340,24 +368,21 @@ h4 { margin: 0; }
 .card-label {
   font-size: 1.3rem;
   font-weight: 600;
-  margin: 0 40px 14px 0;
+  margin: 0 0 14px;
 }
-.card-arrow {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--bg-light);
+/* "See all ... →" text at the bottom of each home card (the whole card is the link) */
+.card-more {
+  margin: 16px 0 0;
   color: var(--blue);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color .15s, color .15s;
+  font-weight: 500;
+  font-size: 0.95rem;
 }
-.card-arrow::before { content: "\2197"; font-size: 1rem; }
-.card-link-card:hover .card-arrow { background: var(--blue); color: var(--white); }
+.card-more-arrow { display: inline-block; transition: transform .15s; }
+.card-link-card:hover .card-more { text-decoration: underline; }
+.card-link-card:hover .card-more-arrow { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) {
+  .card-link-card:hover .card-more-arrow { transform: none; }
+}
 
 /* Intro card: compact on phones (photo, name, Cebu line), large on desktop */
 .card-intro {
@@ -371,7 +396,7 @@ h4 { margin: 0; }
 .card-intro .intro-rule,
 .card-intro .intro-line { display: none; }
 .intro-thumb {
-  grid-row: 1 / span 2;
+  grid-row: 1 / span 3;
   width: 76px;
   height: 76px;
   border-radius: 50%;
@@ -385,14 +410,13 @@ h4 { margin: 0; }
 }
 .intro-label {
   font-size: 0.75rem;
-  letter-spacing: 0.12em;
   line-height: 1.5;
   color: var(--blue);
   margin: 0 0 4px;
 }
 .intro-name {
   font-size: 1.3rem;
-  margin: 0 40px 4px 0;
+  margin: 0 0 4px;
   align-self: end;
 }
 .intro-rule {
@@ -412,6 +436,7 @@ h4 { margin: 0; }
   color: var(--muted);
   align-self: start;
 }
+.card-intro .card-more { grid-column: 2; margin-top: 8px; }
 
 /* Headline card */
 .card-hero {
@@ -697,7 +722,6 @@ h4 { margin: 0; }
   }
   .card-intro .intro-name { font-size: 2rem; margin: 0 0 14px; align-self: auto; }
   .card-intro .intro-cebu { margin-top: 10px; }
-  .card-intro .card-arrow { z-index: 2; pointer-events: none; }
 
   /* Services and How I work share a row and the same height. Spread each
      list evenly: the spacers (::before, ::after) grow by 1 and each row by 2,
@@ -783,6 +807,8 @@ h4 { margin: 0; }
 .tabbar .tab-book { color: var(--white); }
 .tab-book span {
   display: flex;
+  flex-direction: column;
+  gap: 1px;
   align-items: center;
   justify-content: center;
   width: 66px;
@@ -799,6 +825,7 @@ h4 { margin: 0; }
   text-align: center;
 }
 .tabbar .tab-book:hover span { background: var(--navy); }
+.tabbar .tab-book .btn-icon { width: 16px; height: 16px; stroke: currentColor; }
 @media (min-width: 1024px) {
   .tabbar { display: none; }
 }
@@ -875,8 +902,6 @@ h4 { margin: 0; }
     gap: 32px;
     padding: 0 22px 10px;
     font-size: 0.85rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
     color: var(--blue);
   }
   .problem {
@@ -1091,6 +1116,52 @@ h4 { margin: 0; }
 .contact-email { margin: 24px 0 0; }
 .contact-email a { color: var(--blue-light); }
 .contact-email a:hover { color: var(--white); }
+
+/* Three small points under the email line */
+.contact-points {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 28px;
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+  font-size: 0.95rem;
+  color: var(--on-navy-soft);
+}
+.contact-points li { display: inline-flex; align-items: center; gap: 8px; }
+.point-icon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (max-width: 767px) {
+  .contact-points { flex-direction: column; align-items: center; }
+}
+
+/* Contact as a full-page view: the navy panel fills the screen height
+   left over after the Home link and the footer, content centered. */
+body[data-view="contact"] {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+body[data-view="contact"] .main { flex: 1 0 auto; display: flex; flex-direction: column; }
+body[data-view="contact"] #view-contact { flex: 1 0 auto; display: flex; flex-direction: column; align-items: flex-start; }
+body[data-view="contact"] .contact {
+  flex: 1 0 auto;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 /* ==========================================================
    Case study slide viewer

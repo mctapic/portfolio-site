@@ -9,14 +9,14 @@ A one-page site in plain HTML and CSS, with a small amount of JavaScript for swi
 - `styles.css`: colors, fonts and layout
 - `script.js`: section views (one link address per section), Cebu clock and slide viewer
 - `images/headshot-160.webp`, `images/headshot-600.webp`, `images/headshot-1200.webp`: resized copies of `headshot.png`
+- `images/og-image.jpg`: share preview image (from `headshot.png`)
 - `images/case-studies/`: one image per page of each case study PDF
 
-## Before publishing: replace the placeholders
+## Links used on the site
 
-Open `index.html` and search for:
-
-- `YOUR-CALENDLY-LINK` (4 places): replace `https://calendly.com/YOUR-CALENDLY-LINK` with your Calendly link.
-- `YOUR-EMAIL-ADDRESS` (1 place): replace `mailto:YOUR-EMAIL-ADDRESS` with `mailto:you@example.com`, and replace the visible text `[your email address]` with your address.
+- Every "Book a call" button opens https://calendly.com/yourva-marycris/discovery-call in a new tab (4 places in `index.html`).
+- Email: yourva.marycris@gmail.com (Contact page).
+- Share preview image: `images/og-image.jpg`. Once the site has its web address, change the `og:image` line in `index.html` to the full address of that image (for example `https://example.com/images/og-image.jpg`), because most apps only read a full address there.
 
 ## Preview
 

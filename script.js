@@ -46,6 +46,7 @@
     });
 
     document.title = titles[route] ? titles[route] + ' | Mary Cris Tapic' : homeTitle;
+    document.body.setAttribute('data-view', route); // lets CSS size the Contact page
 
     if (target) {
       target.scrollIntoView();
