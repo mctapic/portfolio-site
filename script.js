@@ -67,6 +67,47 @@
     window.scrollTo(0, 0);
   });
 
+  /* ---------- Contact: copy the email address ---------- */
+  var copyBtn = document.querySelector('.copy-email');
+  var copyStatus = document.getElementById('copy-status');
+  var copyTimer;
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    // Fallback for older browsers and pages opened straight from a file
+    return new Promise(function (resolve, reject) {
+      var field = document.createElement('textarea');
+      field.value = text;
+      field.setAttribute('readonly', '');
+      field.style.position = 'fixed';
+      field.style.opacity = '0';
+      document.body.appendChild(field);
+      field.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (err) {}
+      document.body.removeChild(field);
+      if (ok) resolve(); else reject();
+    });
+  }
+
+  copyBtn.addEventListener('click', function () {
+    copyText(copyBtn.getAttribute('data-copy')).then(function () {
+      copyBtn.textContent = 'Copied';
+      copyBtn.classList.add('is-copied');
+      copyStatus.textContent = 'Email address copied';
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(function () {
+        copyBtn.textContent = 'Copy';
+        copyBtn.classList.remove('is-copied');
+        copyStatus.textContent = '';
+      }, 2000);
+    }, function () {
+      // Copy not allowed: leave the button as it is; the mailto link still works
+    });
+  });
+
   /* ---------- Tools card: "See all tools" / "Show less" ---------- */
   var toolsToggle = document.querySelector('.tools-toggle');
   var toolsAll = document.getElementById('tools-all');

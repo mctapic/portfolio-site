@@ -1116,6 +1116,20 @@ h4 { margin: 0; }
 .contact-email { margin: 24px 0 0; }
 .contact-email a { color: var(--blue-light); }
 .contact-email a:hover { color: var(--white); }
+.email-row { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.copy-email {
+  padding: 3px 12px;
+  font: 500 0.8rem var(--font-body);
+  color: var(--on-navy-soft);
+  background: transparent;
+  border: 1px solid rgba(201, 214, 236, 0.55);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color .15s, color .15s, border-color .15s;
+}
+.copy-email:hover { background: rgba(255, 255, 255, 0.1); color: var(--white); border-color: var(--white); }
+.copy-email.is-copied { color: var(--white); border-color: var(--blue-light); }
+.no-js .copy-email { display: none; }
 
 /* Three small points under the email line */
 .contact-points {
