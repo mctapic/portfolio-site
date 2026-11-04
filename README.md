@@ -9,7 +9,6 @@ A one-page site in plain HTML and CSS, with a small amount of JavaScript for swi
 - `styles.css`: colors, fonts and layout
 - `script.js`: section views (one link address per section), Cebu clock and slide viewer
 - `images/headshot-160.webp`, `images/headshot-600.webp`, `images/headshot-1200.webp`: resized copies of `headshot.png`
-- `images/headshot-face-240.webp`: face close-up for the small round photo on the phone home screen (from `headshot.png`)
 - `images/og-image.jpg`: share preview image (from `headshot.png`)
 - `images/case-studies/`: one image per page of each case study PDF
 
